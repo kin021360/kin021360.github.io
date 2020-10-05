@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magnet Redirect Helper</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"
+            integrity="sha512-euWc/Qv8Kp0CbTX1M+Q3BvUyoOaq9Au50TT7vz3MFf5ver39ybq6zV+RngDY8eN8AIQFigxjwYv6jhoP546vfQ=="
+            crossorigin="anonymous"></script>
+    <script src="./js/bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (window.location.hash) {
+                const zipped = window.location.hash.replace('#', '');
+                const unzipped = ZlibHelper.unzip(decodeURIComponent(zipped));
+                const magnetLink = $('<a>', {
+                    id: 'a_magnet',
+                    href: 'magnet:?' + unzipped,
+                    text: 'magnet:?' + unzipped
+                }).appendTo('body');
+                magnetLink[0].click();
+                setTimeout(function () {
+                    window.close();
+                }, 1500);
+            }
+        });
+    </script>
+</head>
+<body>
+Executing magnet link from your browser...
+</body>
+</html>
